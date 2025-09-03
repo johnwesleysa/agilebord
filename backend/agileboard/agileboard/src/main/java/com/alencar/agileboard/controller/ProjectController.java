@@ -64,7 +64,19 @@ public class ProjectController {
                 .map(project -> ResponseEntity.ok(project))
                 .orElse(ResponseEntity.notFound().build());
     }
+    // DELETA um projeto do banco
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProjectById(@PathVariable Long id) {
 
+        // Verifico se o id existe, se existe deleta o mesmo
+        if (projectRepository.existsById(id)) {
+            projectRepository.deleteById(id);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }
