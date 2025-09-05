@@ -3,7 +3,6 @@ package com.alencar.agileboard.controller;
 import com.alencar.agileboard.domain.Project;
 import com.alencar.agileboard.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
