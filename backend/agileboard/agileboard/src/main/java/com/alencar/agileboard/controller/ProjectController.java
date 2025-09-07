@@ -1,12 +1,15 @@
 package com.alencar.agileboard.controller;
 
-import com.alencar.agileboard.domain.Project;
-import com.alencar.agileboard.repository.ProjectRepository;
+import com.alencar.agileboard.dto.ProjectCreateDTO;
+import com.alencar.agileboard.dto.ProjectResponseDTO;
+import com.alencar.agileboard.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -15,67 +18,53 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ProjectService projectService;
 
     // CRIA um novo Projeto
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        // a anotação @PostMapping converte o JSON recebido em um objeto do tipo Project
-        Project savedProject = projectRepository.save(project);
+    public ResponseEntity<ProjectResponseDTO> createProject(@RequestBody ProjectCreateDTO projectDTO) {
+        ProjectResponseDTO createdProject = projectService.createProject(projectDTO);
+
+        //aplicando boa pratica de retornar a url com o novo recurso criado no cabeçalho 'Location'
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdProject.id()).toUri();
 
         // retonra o status HTTP 201 Created e o projeto salvo como resposta
-        return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
+        return ResponseEntity.created(location).body(createdProject);
     }
 
     // ATUALIZA um projeto existente
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
-
-        return projectRepository.findById(id)
-                .map(existingProject -> {
-                    existingProject.setTitle(projectDetails.getTitle());
-                    existingProject.setDescription(projectDetails.getDescription());
-
-                    Project updateProject = projectRepository.save(existingProject);
-
-                    return ResponseEntity.ok(updateProject);
-                })
-                .orElse((ResponseEntity.notFound().build()));
+    public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @RequestBody ProjectCreateDTO projectDetails) {
+        return projectService.updateProject(id, projectDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // LISTA todos os projetos ou FILTRA por nome
     @GetMapping
-    public List<Project> listProjects(@RequestParam(required = false) String title) {
-
-        if (title == null || title.isBlank()) {
-            return projectRepository.findAll();
-        }else{
-            return projectRepository.findByTitleContainingIgnoreCase(title);
-        }
+    public ResponseEntity<List<ProjectResponseDTO>> listProjects(@RequestParam(required = false) String title) {
+        List<ProjectResponseDTO> projects = projectService.getAllProjects(title);
+        return ResponseEntity.ok(projects);
     }
 
     // BUSCA um projeto específico por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Long id) {
-        // @PathVariable pegar o valor de {id} que foi passado na url e atribui a variavel Long id
-
-        return projectRepository.findById(id)
-                .map(project -> ResponseEntity.ok(project))
+    public ResponseEntity<ProjectResponseDTO> getProjectById(@PathVariable Long id) {
+        return projectService.getProjectById(id)
+                .map(projectDTO -> ResponseEntity.ok(projectDTO))
                 .orElse(ResponseEntity.notFound().build());
     }
+
     // DELETA um projeto do banco
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProjectById(@PathVariable Long id) {
-
-        // Verifico se o id existe, se existe deleta o mesmo
-        if (projectRepository.existsById(id)) {
-            projectRepository.deleteById(id);
-
-            return ResponseEntity.noContent().build();
+        if (projectService.deleteProject(id)) {
+            return ResponseEntity.noContent().build(); // 204 No Content
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build(); // 404 Not Found
         }
     }
-
-
 }
+

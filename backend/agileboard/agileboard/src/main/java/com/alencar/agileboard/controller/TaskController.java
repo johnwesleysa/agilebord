@@ -1,12 +1,17 @@
 package com.alencar.agileboard.controller;
 
 import com.alencar.agileboard.domain.Task;
+import com.alencar.agileboard.dto.TaskCreateDTO;
+import com.alencar.agileboard.dto.TaskResponseDTO;
 import com.alencar.agileboard.repository.TaskRepository;
+import com.alencar.agileboard.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -14,57 +19,47 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     // CRIA uma nova task
     @PostMapping
-    public ResponseEntity<Task> createTask (@RequestBody Task task) {
-        Task savedTask = taskRepository.save(task);
-
-        return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
+    public ResponseEntity<TaskResponseDTO> createTask (@RequestBody TaskCreateDTO taskDTO) {
+        TaskResponseDTO createdTask = taskService.createTask(taskDTO);
+        
+        // Boa prática para retornar a url com o novo recurso criado no cabeçaçho 'Location'
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdTask.id()).toUri();
+        
+        return ResponseEntity.created(location).body(createdTask);
     }
 
-    // EDITA a task pelo id
+    // Edita um sprint pelo id
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
-
-        return taskRepository.findById(id)
-                .map(existingTask -> {
-                    existingTask.setTitle(taskDetails.getTitle());
-                    existingTask.setDescription(taskDetails.getDescription());
-                    existingTask.setPriorityLevel(taskDetails.getPriorityLevel());
-
-                    Task updateTask = taskRepository.save(existingTask);
-
-                    return ResponseEntity.ok(updateTask);
-                })
-                .orElse((ResponseEntity.notFound().build()));
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id, @RequestBody TaskCreateDTO taskDetails) {
+        return taskService.updateTask(id, taskDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    // LISTA todos as tasks ou busca pelo title
     @GetMapping
-    public List<Task> listTask(@RequestParam(required = false) String title) {
-
-        if (title == null || title.isBlank()) {
-            return taskRepository.findAll();
-        }else{
-            return taskRepository.findByTitleContainingIgnoreCase(title);
-        }
+    public ResponseEntity<List<TaskResponseDTO>> listTasks(@RequestParam(required = false) String title){
+        List<TaskResponseDTO> tasks = taskService.getAllTasks(title);
+        return ResponseEntity.ok(tasks);
     }
 
-    // BUSCA uma task específica pelo ID
+    // BUSCA uma task pelo id da mesma
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        return taskRepository.findById(id)
-                .map(task -> ResponseEntity.ok(task))
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id)
+                .map(taskDTO -> ResponseEntity.ok(taskDTO))
                 .orElse(ResponseEntity.notFound().build());
     }
     // DELETA uma task do banco
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
-
-        if (taskRepository.existsById(id)) {
-            taskRepository.deleteById(id);
-
+        if (taskService.deleteTask(id)) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
