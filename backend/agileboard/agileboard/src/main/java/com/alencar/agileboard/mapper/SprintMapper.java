@@ -17,6 +17,10 @@ public class SprintMapper {
     }
 
     public SprintResponseDTO toResponseDTO(Sprint sprint) {
-        return new SprintResponseDTO(sprint.getId(), sprint.getTitle(), sprint.getDescription());
+        return new SprintResponseDTO(
+                sprint.getId(),
+                sprint.getTitle(),
+                sprint.getDescription(),
+                sprint.getProject().getId());
     }
 }

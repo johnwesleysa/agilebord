@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @NoArgsConstructor // Gera um construtor vazio, pois o JPA precisa disso
@@ -20,4 +25,7 @@ public class Project {
 
     private String title;
     private String description;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sprint> sprints = new ArrayList<>();
 }

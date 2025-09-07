@@ -17,6 +17,11 @@ public class TaskMapper {
     }
 
     public TaskResponseDTO toResponseDTO(Task task){
-        return new TaskResponseDTO(task.getId(), task.getTitle(), task.getDescription(), task.getPriorityLevel());
+        return new TaskResponseDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getPriorityLevel(),
+                task.getSprint().getId());
     }
 }

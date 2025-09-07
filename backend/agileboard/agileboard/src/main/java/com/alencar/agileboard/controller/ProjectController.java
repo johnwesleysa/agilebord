@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.alencar.agileboard.dto.SprintCreateDTO;
+import com.alencar.agileboard.dto.SprintResponseDTO;
+import com.alencar.agileboard.service.SprintService;
 
 import java.net.URI;
 import java.util.List;
@@ -18,8 +21,15 @@ import java.util.List;
 @RequestMapping("/api/projects")
 public class ProjectController {
 
+
+    private final ProjectService projectService;
+    private final SprintService sprintService;
+
     @Autowired
-    private ProjectService projectService;
+    public ProjectController(ProjectService projectService, SprintService sprintService){
+        this.projectService = projectService;
+        this.sprintService = sprintService;
+    }
 
     // CRIA um novo Projeto
     @PostMapping
@@ -33,6 +43,20 @@ public class ProjectController {
 
         // retonra o status HTTP 201 Created e o projeto salvo como resposta
         return ResponseEntity.created(location).body(createdProject);
+    }
+
+
+    // Cria uma sprint dentro de um projeto especifico
+    @PostMapping("/{projectId}/sprints")
+    public ResponseEntity<SprintResponseDTO> createSprintForProject(@PathVariable Long projectId, @Valid @RequestBody SprintCreateDTO sprintDTO) {
+        SprintResponseDTO createSprint = sprintService.createSprintForProject(projectId, sprintDTO);
+
+        // A URL de resposta para o novo recurso é /api/sprints/{id}, não aninhada
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/api/sprints/{id}")
+                .buildAndExpand(createSprint.id()).toUri();
+
+        return ResponseEntity.created(location).body(createSprint);
     }
 
     // ATUALIZA um projeto existente

@@ -6,6 +6,7 @@ public record TaskResponseDTO(
         Long id,
         String title,
         String description,
-        PriorityLevel priorityLevel
+        PriorityLevel priorityLevel,
+        Long sprintId
 ) {
 }

@@ -22,18 +22,7 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    // CRIA uma nova task
-    @PostMapping
-    public ResponseEntity<TaskResponseDTO> createTask (@Valid @RequestBody TaskCreateDTO taskDTO) {
-        TaskResponseDTO createdTask = taskService.createTask(taskDTO);
-        
-        // Boa prática para retornar a url com o novo recurso criado no cabeçaçho 'Location'
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(createdTask.id()).toUri();
-        
-        return ResponseEntity.created(location).body(createdTask);
-    }
+    // CRIAR uma nova task está em SprintController pois uma task nao existe sem uma sprint
 
     // Edita um sprint pelo id
     @PutMapping("/{id}")

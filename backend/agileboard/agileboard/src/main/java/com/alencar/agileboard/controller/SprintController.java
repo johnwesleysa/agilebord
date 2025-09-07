@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.alencar.agileboard.dto.TaskCreateDTO;
+import com.alencar.agileboard.dto.TaskResponseDTO;
+import com.alencar.agileboard.service.TaskService;
 
 import java.net.URI;
 import java.util.List;
@@ -16,21 +19,29 @@ import java.util.List;
 @RequestMapping("api/sprints")
 public class SprintController {
 
+    private final SprintService sprintService;
+    private final TaskService taskService;
+
     @Autowired
-    public SprintService sprintService;
-
-    // CRIA uma nova sprint
-    @PostMapping
-    public ResponseEntity<SprintResponseDTO> createSprint (@Valid @RequestBody SprintCreateDTO sprintDTO) {
-        SprintResponseDTO createdSprint = sprintService.createSprint(sprintDTO);
-
-        // Aplicando boa prática de retornar a url com o novo recurso criado no cabeçalho 'Location'
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(createdSprint.id()).toUri();
-
-        return ResponseEntity.created(location).body(createdSprint);
+    public SprintController(SprintService sprintService, TaskService taskService) {
+        this.sprintService = sprintService;
+        this.taskService = taskService;
     }
+
+    // CRIAR uma nova sprint está em projectController, pois uma sprint só pode existir caso esteja atrelada a um projeto
+
+    // CRIAR uma task associada a uma sprint
+    @PostMapping("/{sprintId}/tasks")
+    public ResponseEntity<TaskResponseDTO> createTaskForSprint(@PathVariable Long sprintId, @Valid @RequestBody TaskCreateDTO taskDTO){
+        TaskResponseDTO createdTask = taskService.createTaskForSprint(sprintId, taskDTO);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/api/tasks/{id}")
+                .buildAndExpand(createdTask.id()).toUri();
+
+        return ResponseEntity.created(location).body(createdTask);
+    }
+
 
     // Edita um sprint pelo id
     @PutMapping("/{id}")

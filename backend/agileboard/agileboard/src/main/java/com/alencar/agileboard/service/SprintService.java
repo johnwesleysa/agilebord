@@ -8,6 +8,8 @@ import com.alencar.agileboard.repository.SprintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.alencar.agileboard.repository.ProjectRepository;
+import com.alencar.agileboard.domain.Project;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,19 +19,29 @@ import java.util.stream.Collectors;
 public class SprintService {
 
     private final SprintRepository sprintRepository;
+    private final ProjectRepository projectRepository;
     private final SprintMapper sprintMapper;
 
     @Autowired
-    public SprintService(SprintRepository sprintRepository, SprintMapper sprintMapper) {
+    public SprintService(SprintRepository sprintRepository,ProjectRepository projectRepository ,SprintMapper sprintMapper) {
         this.sprintRepository = sprintRepository;
+        this.projectRepository = projectRepository;
         this.sprintMapper = sprintMapper;
     }
 
     // Criar nova sprint
     @Transactional
-    public SprintResponseDTO createSprint(SprintCreateDTO dto) {
+    public SprintResponseDTO createSprintForProject(Long projectId, SprintCreateDTO dto) {
+        //Buscando a entidade pai (Project)
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Projeto Com ID" + projectId + " não encontrado"));
+
         Sprint sprintEntity = sprintMapper.toEntity(dto);
 
+        //Associação da sprint ao project
+        sprintEntity.setProject(project);
+
+        //Salva a nova sprint (o JPA vai se encarregar da chave estrangeria)
         Sprint savedSprint = sprintRepository.save(sprintEntity);
 
         return sprintMapper.toResponseDTO(savedSprint);

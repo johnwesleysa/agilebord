@@ -1,9 +1,11 @@
 package com.alencar.agileboard.service;
 
+import com.alencar.agileboard.domain.Sprint;
 import com.alencar.agileboard.domain.Task;
 import com.alencar.agileboard.dto.TaskCreateDTO;
 import com.alencar.agileboard.dto.TaskResponseDTO;
 import com.alencar.agileboard.mapper.TaskMapper;
+import com.alencar.agileboard.repository.SprintRepository;
 import com.alencar.agileboard.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,22 +18,31 @@ import java.util.stream.Collectors;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final SprintRepository sprintRepository;
     private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper){
+    public TaskService(TaskRepository taskRepository,SprintRepository sprintRepository ,TaskMapper taskMapper){
         this.taskRepository = taskRepository;
+        this.sprintRepository = sprintRepository;
         this.taskMapper = taskMapper;
     }
 
     // Cria uma task
     @Transactional
-    public TaskResponseDTO createTask(TaskCreateDTO dto) {
+    public TaskResponseDTO createTaskForSprint(Long sprintId, TaskCreateDTO dto){
+        //Bucando a entidade pai (sprint)
+        Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new RuntimeException("Sprint com ID" + sprintId + " não encontrado"));
+
         Task taskEntity = taskMapper.toEntity(dto);
 
-        Task savedTask = taskRepository.save(taskEntity);
+        //Associação da task criada com a sprint
+        taskEntity.setSprint(sprint);
 
+        Task savedTask = taskRepository.save(taskEntity);
         return taskMapper.toResponseDTO(savedTask);
+
     }
 
     // Busca uma task por title ou lista todas

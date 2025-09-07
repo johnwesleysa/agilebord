@@ -24,4 +24,8 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private PriorityLevel priorityLevel;
+
+    @ManyToOne
+    @JoinColumn(name = "sprint_id", nullable = false)
+    private Sprint sprint;
 }
