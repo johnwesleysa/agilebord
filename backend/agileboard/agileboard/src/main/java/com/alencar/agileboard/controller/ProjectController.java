@@ -3,6 +3,7 @@ package com.alencar.agileboard.controller;
 import com.alencar.agileboard.dto.ProjectCreateDTO;
 import com.alencar.agileboard.dto.ProjectResponseDTO;
 import com.alencar.agileboard.service.ProjectService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ProjectController {
 
     // CRIA um novo Projeto
     @PostMapping
-    public ResponseEntity<ProjectResponseDTO> createProject(@RequestBody ProjectCreateDTO projectDTO) {
+    public ResponseEntity<ProjectResponseDTO> createProject(@Valid @RequestBody ProjectCreateDTO projectDTO) {
         ProjectResponseDTO createdProject = projectService.createProject(projectDTO);
 
         //aplicando boa pratica de retornar a url com o novo recurso criado no cabeçalho 'Location'
@@ -36,7 +37,7 @@ public class ProjectController {
 
     // ATUALIZA um projeto existente
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @RequestBody ProjectCreateDTO projectDetails) {
+    public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @Valid @RequestBody ProjectCreateDTO projectDetails) {
         return projectService.updateProject(id, projectDetails)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,7 +45,7 @@ public class ProjectController {
 
     // LISTA todos os projetos ou FILTRA por nome
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDTO>> listProjects(@RequestParam(required = false) String title) {
+    public ResponseEntity<List<ProjectResponseDTO>> listProjects(@Valid @RequestParam(required = false) String title) {
         List<ProjectResponseDTO> projects = projectService.getAllProjects(title);
         return ResponseEntity.ok(projects);
     }

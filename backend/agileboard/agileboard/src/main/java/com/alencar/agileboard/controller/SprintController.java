@@ -3,6 +3,7 @@ package com.alencar.agileboard.controller;
 import com.alencar.agileboard.dto.SprintCreateDTO;
 import com.alencar.agileboard.dto.SprintResponseDTO;
 import com.alencar.agileboard.service.SprintService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class SprintController {
 
     // CRIA uma nova sprint
     @PostMapping
-    public ResponseEntity<SprintResponseDTO> createSprint (@RequestBody SprintCreateDTO sprintDTO) {
+    public ResponseEntity<SprintResponseDTO> createSprint (@Valid @RequestBody SprintCreateDTO sprintDTO) {
         SprintResponseDTO createdSprint = sprintService.createSprint(sprintDTO);
 
         // Aplicando boa prática de retornar a url com o novo recurso criado no cabeçalho 'Location'
@@ -33,7 +34,7 @@ public class SprintController {
 
     // Edita um sprint pelo id
     @PutMapping("/{id}")
-    public ResponseEntity<SprintResponseDTO> updateSprint(@PathVariable Long id, @RequestBody SprintCreateDTO sprintDetails) {
+    public ResponseEntity<SprintResponseDTO> updateSprint(@Valid @PathVariable Long id, @RequestBody SprintCreateDTO sprintDetails) {
         return sprintService.updateSprint(id, sprintDetails)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

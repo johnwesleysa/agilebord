@@ -21,5 +21,7 @@ public class Task {
 
     private String title;
     private String description;
-    private String priorityLevel;
+
+    @Enumerated(EnumType.STRING)
+    private PriorityLevel priorityLevel;
 }

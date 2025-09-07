@@ -5,6 +5,7 @@ import com.alencar.agileboard.dto.TaskCreateDTO;
 import com.alencar.agileboard.dto.TaskResponseDTO;
 import com.alencar.agileboard.repository.TaskRepository;
 import com.alencar.agileboard.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class TaskController {
 
     // CRIA uma nova task
     @PostMapping
-    public ResponseEntity<TaskResponseDTO> createTask (@RequestBody TaskCreateDTO taskDTO) {
+    public ResponseEntity<TaskResponseDTO> createTask (@Valid @RequestBody TaskCreateDTO taskDTO) {
         TaskResponseDTO createdTask = taskService.createTask(taskDTO);
         
         // Boa prática para retornar a url com o novo recurso criado no cabeçaçho 'Location'
@@ -36,7 +37,7 @@ public class TaskController {
 
     // Edita um sprint pelo id
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id, @RequestBody TaskCreateDTO taskDetails) {
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id,@Valid @RequestBody TaskCreateDTO taskDetails) {
         return taskService.updateTask(id, taskDetails)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
