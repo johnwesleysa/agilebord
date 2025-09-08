@@ -3,17 +3,14 @@ package com.alencar.agileboard.service;
 import com.alencar.agileboard.domain.Project;
 import com.alencar.agileboard.dto.ProjectCreateDTO;
 import com.alencar.agileboard.dto.ProjectResponseDTO;
+import com.alencar.agileboard.exception.ResourceNotFoundException; // <-- IMPORTAR
 import com.alencar.agileboard.mapper.ProjectMapper;
 import com.alencar.agileboard.repository.ProjectRepository;
-
-// usar org.springframework.transaction.annotation.Transactional
-// nao usar javax.transaction.Transactional
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,20 +25,15 @@ public class ProjectService {
         this.projectMapper = projectMapper;
     }
 
-    //Criar projeto
-    //recebe um DTO e retorna um DTO
-
+    // Criar projeto
     @Transactional
     public ProjectResponseDTO createProject(ProjectCreateDTO dto) {
-        //Aqui converte o DTO para a entidade project
         Project projectEntity = projectMapper.toEntity(dto);
-
         Project savedProject = projectRepository.save(projectEntity);
-
         return projectMapper.toResponseDTO(savedProject);
     }
 
-    // BUSCA um projeto específico por ID
+    // Listar todos os projetos
     @Transactional(readOnly = true)
     public List<ProjectResponseDTO> getAllProjects(String title) {
         List<Project> projects;
@@ -50,40 +42,43 @@ public class ProjectService {
         } else {
             projects = projectRepository.findByTitleContainingIgnoreCase(title);
         }
-
         return projects.stream()
                 .map(projectMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    //BUSCA por ID
+    // BUSCA por ID
     @Transactional(readOnly = true)
-    public Optional<ProjectResponseDTO> getProjectById(Long id){
-        return projectRepository.findById(id)
-                .map(projectMapper::toResponseDTO);
+    public ProjectResponseDTO getProjectById(Long id){
+        // Busca o projeto ou lança a exceção se não encontrar.
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Projeto com ID " + id + " não encontrado."));
+        // Se encontrou, mapeia para o DTO e retorna.
+        return projectMapper.toResponseDTO(project);
     }
 
-    //ATUALIZA um projeto existente, após a busca por id
+    // ATUALIZA um projeto existente
     @Transactional
-    public Optional<ProjectResponseDTO> updateProject(Long id, ProjectCreateDTO dto) {
-        return projectRepository.findById(id)
-                .map(existingProject -> {
-                    existingProject.setTitle(dto.title());
-                    existingProject.setDescription(dto.description());
+    public ProjectResponseDTO updateProject(Long id, ProjectCreateDTO dto) {
+        // Primeiro, garante que o projeto existe. Se não, lança a exceção.
+        Project existingProject = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Projeto com ID " + id + " não encontrado para atualização."));
 
-                    Project updatedProject = projectRepository.save(existingProject);
+        // Se existe, atualiza os campos.
+        existingProject.setTitle(dto.title());
+        existingProject.setDescription(dto.description());
+        Project updatedProject = projectRepository.save(existingProject);
 
-                    return projectMapper.toResponseDTO(updatedProject);
-                });
+        return projectMapper.toResponseDTO(updatedProject);
     }
 
     // DELETA UM PROJETO
-    public boolean deleteProject(Long id) {
-        if (projectRepository.existsById(id)){
-            projectRepository.deleteById(id);
-            return true;
+    @Transactional
+    public void deleteProject(Long id) {
+        // Verifica se o projeto existe antes de tentar deletar.
+        if (!projectRepository.existsById(id)){
+            throw new ResourceNotFoundException("Projeto com ID " + id + " não encontrado para exclusão.");
         }
-        return false;
+        projectRepository.deleteById(id);
     }
-
 }
