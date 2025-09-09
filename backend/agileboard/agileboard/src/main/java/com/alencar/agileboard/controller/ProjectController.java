@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
 import java.util.List;
@@ -57,13 +59,12 @@ public class ProjectController {
 
 
 
-    // LISTA todos os projetos (sem alterações)
+    // LISTA todos os projetos ou filtra por nome
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDTO>> listProjects(@RequestParam(required = false) String title) {
-        List<ProjectResponseDTO> projects = projectService.getAllProjects(title);
+    public ResponseEntity<Page<ProjectResponseDTO>> listProjects(@RequestParam(required = false) String title, Pageable pageable) {
+        Page<ProjectResponseDTO> projects = projectService.getAllProjects(title, pageable);
         return ResponseEntity.ok(projects);
     }
-
 
     // BUSCA um projeto específico por ID
     @GetMapping("/{id}")

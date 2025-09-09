@@ -3,12 +3,15 @@ package com.alencar.agileboard.service;
 import com.alencar.agileboard.domain.Project;
 import com.alencar.agileboard.dto.ProjectCreateDTO;
 import com.alencar.agileboard.dto.ProjectResponseDTO;
-import com.alencar.agileboard.exception.ResourceNotFoundException; // <-- IMPORTAR
+import com.alencar.agileboard.exception.ResourceNotFoundException;
 import com.alencar.agileboard.mapper.ProjectMapper;
 import com.alencar.agileboard.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,17 +38,17 @@ public class ProjectService {
 
     // Listar todos os projetos
     @Transactional(readOnly = true)
-    public List<ProjectResponseDTO> getAllProjects(String title) {
-        List<Project> projects;
-        if (title == null || title.isBlank()){
-            projects = projectRepository.findAll();
+    public Page<ProjectResponseDTO> getAllProjects(String title, Pageable pageable){
+        Page<Project> projectPage;
+        if(title == null || title.isBlank()){
+            projectPage = projectRepository.findAll(pageable);
         } else {
-            projects = projectRepository.findByTitleContainingIgnoreCase(title);
+            projectPage = projectRepository.findByTitleContainingIgnoreCase(title, pageable);
         }
-        return projects.stream()
-                .map(projectMapper::toResponseDTO)
-                .collect(Collectors.toList());
+
+        return projectPage.map(projectMapper::toResponseDTO);
     }
+
 
     // BUSCA por ID
     @Transactional(readOnly = true)
