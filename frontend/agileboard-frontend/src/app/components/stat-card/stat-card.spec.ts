@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SprisquadRankingCard } from './sprisquad-ranking-card';
+import { StatCard } from './stat-card';
 
-describe('SprisquadRankingCard', () => {
-  let component: SprisquadRankingCard;
-  let fixture: ComponentFixture<SprisquadRankingCard>;
+describe('StatCard', () => {
+  let component: StatCard;
+  let fixture: ComponentFixture<StatCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SprisquadRankingCard]
+      imports: [StatCard]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SprisquadRankingCard);
+    fixture = TestBed.createComponent(StatCard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,81 @@
+:host {
+  display: block;
+}
+
+.card-container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  .icon { color: #a78bfa; } // Roxo
+  .title { margin: 0; font-size: 1.125rem; font-weight: 600; color: #1e293b; }
+}
+
+.ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; // Espaço entre os itens da lista
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+
+  &:last-child {
+    border-bottom: none; // Remove a borda do último item
+    padding-bottom: 0;
+  }
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.9rem;
+}
+
+.name-points {
+  display: flex;
+  flex-direction: column;
+
+  .name {
+    font-weight: 600;
+    color: #334155;
+  }
+  .points {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+}
+
+.rank {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
