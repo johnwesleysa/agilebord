@@ -1,0 +1,111 @@
+:host {
+  display: block; // Garante que o componente se comporte como um bloco
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between; // Mágica do Flexbox: empurra os filhos para as extremidades
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0; // Linha divisória sutil
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Estilos para a Barra de Busca (lado esquerdo)
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f8fafc;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+
+  .search-icon {
+    color: #94a3b8; // Cinza claro para o ícone
+  }
+
+  input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    color: #334155;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+}
+
+// Estilos para as Informações do Usuário (lado direito)
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.notification-bell {
+  position: relative; // Necessário para posicionar o badge
+  color: #64748b;
+  cursor: pointer;
+
+  .notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #ef4444; // Vermelho
+    color: #ffffff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.avatar-group {
+  display: flex;
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.8rem;
+
+    // Efeito de sobreposição
+    &:not(:first-child) {
+      margin-left: -12px;
+    }
+  }
+}
+
+.squad-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .squad-name {
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .squad-members {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+}

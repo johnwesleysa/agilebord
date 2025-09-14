@@ -1,0 +1,21 @@
+.main-layout-container {
+  display: flex; /* A mágica acontece aqui! Alinha os filhos lado a lado. */
+  height: 100vh;
+  background-color: #f8fafc;
+}
+
+.sidebar {
+  flex-shrink: 0; /* Impede que a sidebar encolha */
+  /* A largura será definida dentro do próprio componente da sidebar */
+}
+
+.main-content {
+  flex-grow: 1; /* Faz o conteúdo principal ocupar todo o espaço restante */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Permite rolar o conteúdo se for maior que a tela */
+}
+
+.page-content {
+  padding: 2rem; /* Espaçamento interno para as páginas */
+}
