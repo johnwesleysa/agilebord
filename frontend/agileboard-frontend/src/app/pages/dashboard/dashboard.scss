@@ -24,11 +24,10 @@
 
 .main-content-grid {
   display: grid;
-  // Cria 3 colunas, onde a primeira ocupa 2 frações de espaço e a segunda 1 fração.
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
-  align-items: flex-start; // Garante que os cards alinhem pelo topo
 }
+
 
 @media (max-width: 1024px) {
   .stats-grid {

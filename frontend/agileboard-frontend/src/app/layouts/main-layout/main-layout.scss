@@ -19,3 +19,11 @@
 .page-content {
   padding: 2rem; /* Espaçamento interno para as páginas */
 }
+
+.page-content {
+  padding: 2rem;
+  // ADICIONE ESTAS DUAS LINHAS
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; // Permite que esta área cresça para preencher o espaço vertical
+}
