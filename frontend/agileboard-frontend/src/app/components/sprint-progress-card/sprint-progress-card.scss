@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: flex;
 }
 
 .card-container {
@@ -8,6 +8,9 @@
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .card-header {
@@ -55,7 +58,7 @@
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #22c55e; // Verde
+  background-color: #2463EB; // Verde
   border-radius: 4px;
 }
 
@@ -79,13 +82,13 @@
   }
 
   .story-points {
-    background-color: #f0fdf4; // Fundo verde claro
-    color: #16a34a; // Verde escuro
+    background-color: #f1f5f9; // Fundo verde claro
+    color: #2463EB; // Verde escuro
   }
 
   .planned {
-    background-color: #fffbeb; // Fundo amarelo claro
-    color: #d97706; // Amarelo/laranja escuro
+    background-color: #f5f2fa; // Fundo amarelo claro
+    color: #7C3BED; // Amarelo/laranja escuro
   }
 
   .metric-label {

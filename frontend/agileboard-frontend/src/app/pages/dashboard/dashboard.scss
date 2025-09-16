@@ -22,19 +22,28 @@
   margin-bottom: 2rem;
 }
 
+// ----- CÓDIGO CORRIGIDO E COM RESPONSIVIDADE -----
 .main-content-grid {
   display: grid;
+  // CORREÇÃO: 2 partes para a primeira coluna, 1 parte para a segunda.
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
+  // Por padrão, o grid já estica os itens para a mesma altura (align-items: stretch).
+  // Não precisamos adicionar nada para a altura.
 }
 
+/* --- Media Queries --- */
 
 @media (max-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
+  // Em telas médias, fazemos os cards do conteúdo principal se empilharem.
+  .main-content-grid {
+    grid-template-columns: 1fr; // Muda para uma única coluna
+  }
+}
 
 @media (max-width: 768px) {
   .stats-grid {
