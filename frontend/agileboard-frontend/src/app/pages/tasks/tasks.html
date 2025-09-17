@@ -1,0 +1,47 @@
+<div class="kanban-page-container">
+  <header class="page-header">
+    <div class="header-title">
+      <h1>Quadro Kanban</h1>
+      <p>Gerencie tarefas com metodologia ágil</p>
+    </div>
+    <button class="add-task-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
+      <span>Nova Tarefa</span>
+    </button>
+  </header>
+
+  <div class="action-bar">
+    </div>
+
+  <div class="kanban-board" cdkDropListGroup>
+    <div class="kanban-column">
+      <div class="column-header todo">
+        <h3>A Fazer</h3>
+        <span class="task-count">2</span>
+      </div>
+      <div class="task-list" cdkDropList [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
+        <app-task-card *ngFor="let item of todo" cdkDrag>{{item}}</app-task-card>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header in-progress">
+        <h3>Em Progresso</h3>
+        <span class="task-count">1</span>
+      </div>
+      <div class="task-list" cdkDropList [cdkDropListData]="inProgress" (cdkDropListDropped)="drop($event)">
+        <app-task-card *ngFor="let item of inProgress" cdkDrag>{{item}}</app-task-card>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header done">
+        <h3>Concluído</h3>
+        <span class="task-count">1</span>
+      </div>
+      <div class="task-list" cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
+        <app-task-card *ngFor="let item of done" cdkDrag>{{item}}</app-task-card>
+      </div>
+    </div>
+  </div>
+</div>

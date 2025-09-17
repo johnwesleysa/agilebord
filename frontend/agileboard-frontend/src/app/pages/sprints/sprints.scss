@@ -1,0 +1,55 @@
+// Reutilizando os estilos do cabeçalho da página de projetos
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; font-size: 1.875rem; font-weight: 700; color: #1e293b; }
+  p { margin: 0.25rem 0 0; color: #64748b; }
+}
+
+.add-sprint-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #2463EB, #7C3BED);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+
+  .tab-item {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+
+    &.active {
+      color: var(--primary-brand-color, #4f46e5);
+      border-bottom-color: var(--primary-brand-color, #4f46e5);
+    }
+  }
+}
+
+.sprints-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 1.5rem;
+}

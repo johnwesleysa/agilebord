@@ -1,29 +1,30 @@
 .main-layout-container {
-  display: flex; /* A mágica acontece aqui! Alinha os filhos lado a lado. */
+  display: flex;
   height: 100vh;
   background-color: #f8fafc;
 }
 
 .sidebar {
-  flex-shrink: 0; /* Impede que a sidebar encolha */
-  /* A largura será definida dentro do próprio componente da sidebar */
+  flex-shrink: 0;
 }
 
 .main-content {
-  flex-grow: 1; /* Faz o conteúdo principal ocupar todo o espaço restante */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Permite rolar o conteúdo se for maior que a tela */
+  overflow-y: auto;
 }
 
-.page-content {
-  padding: 2rem; /* Espaçamento interno para as páginas */
-}
+
 
 .page-content {
   padding: 2rem;
-  // ADICIONE ESTAS DUAS LINHAS
   display: flex;
   flex-direction: column;
-  flex-grow: 1; // Permite que esta área cresça para preencher o espaço vertical
+  flex-grow: 1;
+
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto; 
+  box-sizing: border-box;
 }

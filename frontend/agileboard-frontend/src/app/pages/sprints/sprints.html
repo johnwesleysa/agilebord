@@ -1,0 +1,25 @@
+<div class="sprints-page-container">
+  <header class="page-header">
+    <div class="header-title">
+      <h1>Sprints</h1>
+      <p>Gerencie os ciclos de desenvolvimento</p>
+    </div>
+    <button class="add-sprint-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
+      <span>Nova Sprint</span>
+    </button>
+  </header>
+
+  <div class="filter-tabs">
+    <button class="tab-item active">Todas</button>
+    <button class="tab-item">Ativas</button>
+    <button class="tab-item">Planejadas</button>
+    <button class="tab-item">Concluídas</button>
+  </div>
+
+  <div class="sprints-grid">
+    <app-sprint-card></app-sprint-card>
+    <app-sprint-card></app-sprint-card>
+    <app-sprint-card></app-sprint-card>
+  </div>
+</div>

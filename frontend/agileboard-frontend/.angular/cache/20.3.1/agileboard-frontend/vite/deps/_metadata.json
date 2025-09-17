@@ -1,40 +1,55 @@
 {
-  "hash": "2ba65414",
-  "configHash": "9097ac4b",
-  "lockfileHash": "bdea6213",
-  "browserHash": "3cf18cc9",
+  "hash": "016f88f8",
+  "configHash": "63cac506",
+  "lockfileHash": "b7f3acf8",
+  "browserHash": "a52698d1",
   "optimized": {
+    "@angular/cdk/drag-drop": {
+      "src": "../../../../../../node_modules/@angular/cdk/fesm2022/drag-drop.mjs",
+      "file": "@angular_cdk_drag-drop.js",
+      "fileHash": "7831a5ad",
+      "needsInterop": false
+    },
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "a3073ea9",
+      "needsInterop": false
+    },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "b0ad196e",
+      "fileHash": "90c8cc6d",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "bfb2f848",
+      "fileHash": "6e6c95da",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "6372507c",
+      "fileHash": "2066df11",
       "needsInterop": false
     },
     "zone.js": {
       "src": "../../../../../../node_modules/zone.js/fesm2015/zone.js",
       "file": "zone__js.js",
-      "fileHash": "b5beedcb",
+      "fileHash": "482c1f4b",
       "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-MXG3AQWP": {
-      "file": "chunk-MXG3AQWP.js"
+    "chunk-PJZ6CX43": {
+      "file": "chunk-PJZ6CX43.js"
     },
-    "chunk-7JTMETAR": {
-      "file": "chunk-7JTMETAR.js"
+    "chunk-XW5Q6XUS": {
+      "file": "chunk-XW5Q6XUS.js"
+    },
+    "chunk-NI53IPUC": {
+      "file": "chunk-NI53IPUC.js"
     },
     "chunk-TJFVSI2U": {
       "file": "chunk-TJFVSI2U.js"

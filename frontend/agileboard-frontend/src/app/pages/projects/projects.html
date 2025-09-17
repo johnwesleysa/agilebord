@@ -1,0 +1,32 @@
+<div class="projects-page-container">
+  <header class="page-header">
+    <div class="header-title">
+      <h1>Projetos</h1>
+      <p>Gerencie todos os projetos do seu time</p>
+    </div>
+    <button class="add-project-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
+      <span>Novo Projeto</span>
+    </button>
+  </header>
+
+  <div class="action-bar">
+    <div class="search-bar">
+       <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+      <input type="text" placeholder="Buscar projetos...">
+    </div>
+    <button class="filter-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M21 4H3a1 1 0 0 0-1 1v2.59c0 .523.21.992.553 1.336L10 15.341V21a1 1 0 0 0 1.447.894l4-2A1 1 0 0 0 16 19v-3.659l7.447-7.415c.343-.344.553-.813.553-1.336V5a1 1 0 0 0-1-1zm-1 4.59-7 7L6 11.59V6h12v2.59z"/></svg>
+      <span>Filtros</span>
+    </button>
+  </div>
+
+  <div class="projects-grid">
+    <app-project-status-card></app-project-status-card>
+    <app-project-status-card></app-project-status-card>
+    <app-project-status-card></app-project-status-card>
+    <app-project-status-card></app-project-status-card>
+    <app-project-status-card></app-project-status-card>
+    <app-project-status-card></app-project-status-card>
+  </div>
+</div>

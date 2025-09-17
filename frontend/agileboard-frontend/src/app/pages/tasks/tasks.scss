@@ -1,0 +1,111 @@
+.kanban-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // Garante que o container ocupe a altura restante da tela
+  flex-grow: 1;
+}
+
+// Estilos para o cabeçalho da página (copie de sprints.scss se precisar)
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; font-size: 1.875rem; font-weight: 700; color: #1e293b; }
+  p { margin: 0.25rem 0 0; color: #64748b; }
+}
+
+.add-task-btn {
+  // ... estilos do botão ...
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #2463EB, #7C3BED);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
+}
+
+
+// --- MUDANÇAS PRINCIPAIS A PARTIR DAQUI ---
+
+.kanban-board {
+  display: grid;
+  // Cria 3 colunas que ocupam o espaço de forma igual
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  // Garante que o quadro cresça para ocupar a altura disponível
+  flex-grow: 1;
+}
+
+.kanban-column {
+  // Removemos a largura fixa para que o grid controle o tamanho
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column; // Organiza header e lista verticalmente
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem; // Padding interno do cabeçalho
+  margin-bottom: 1rem;
+  border-bottom: 2px solid; // Borda colorida
+  border-radius: 8px 8px 0 0;
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .task-count {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+  }
+
+  // Cores específicas para cada coluna
+  &.todo {
+    border-color: #94a3b8; // Cinza
+    .task-count { background-color: #e2e8f0; color: #334155; }
+  }
+  &.in-progress {
+    border-color: #f59e0b; // Laranja
+    .task-count { background-color: #fef3c7; color: #b45309; }
+  }
+  &.done {
+    border-color: #22c55e; // Verde
+    .task-count { background-color: #dcfce7; color: #15803d; }
+  }
+}
+
+.task-list {
+  min-height: 200px;
+  border-radius: 8px;
+  flex-grow: 1; // Faz a lista ocupar o espaço vertical restante na coluna
+  overflow-y: auto; // Adiciona scroll se a lista for muito grande
+}
+
+// Estilos do CDK Drag and Drop
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
