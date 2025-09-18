@@ -1,13 +1,12 @@
-<div class="card-container">
+@if (project) {
+  <div class="card-container">
   <div class="card-header">
-    <h4 class="project-title">E-commerce Platform</h4>
-    <button class="options-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
-    </button>
+    <h4 class="project-title">{{ project.title }}</h4>
+    <button class="options-btn">...</button>
   </div>
 
   <p class="project-description">
-    Modernização da plataforma de vendas online
+    {{ project.description }}
   </p>
 
   <div class="status-tag in-progress">
@@ -39,8 +38,6 @@
       <div class="avatar-group">
         <span class="avatar" style="background-color: #fca5a5;">JS</span>
         <span class="avatar" style="background-color: #818cf8;">MI</span>
-        <span class="avatar" style="background-color: #fcd34d;">AL</span>
-        <span class="avatar" style="background-color: #a78bfa;">TF</span>
       </div>
     </div>
     <div class="footer-deadline">
@@ -48,3 +45,4 @@
     </div>
   </div>
 </div>
+}

@@ -6,6 +6,9 @@ import { Dashboard } from './pages/dashboard/dashboard'
 import { Projects } from './pages/projects/projects';
 import { Sprints } from './pages/sprints/sprints';
 import { Tasks } from './pages/tasks/tasks';
+import { ProjectForm } from './pages/project-form/project-form';
+import { SprintForm } from './pages/sprint-form/sprint-form';
+
 
 export const routes: Routes = [
   // Rotas de autenticação (não usam o layout principal)
@@ -19,7 +22,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: Dashboard },
       { path: 'projects', component: Projects},
+      { path: 'projects/new', component: ProjectForm },
+      { path: 'projects/edit/:id', component: ProjectForm },
       { path: 'sprints', component: Sprints},
+      { path: 'sprints/new', component: SprintForm},
       { path: 'tasks', component: Tasks}
 
 

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -62,5 +63,19 @@ public class GlobalExceptionHandler {
                 List.of(ex.getMessage()) // Em produção, talvez você não queira expor a mensagem exata
         );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    // Handler para conflitos de negócio, como usuário duplicado.
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiError> handleIllegalStateException(IllegalStateException ex, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(), // Status 409: Conflito
+                "Conflict",
+                ex.getMessage(), // A mensagem "O nome de usuário já existe"
+                request.getRequestURI(),
+                null
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 }

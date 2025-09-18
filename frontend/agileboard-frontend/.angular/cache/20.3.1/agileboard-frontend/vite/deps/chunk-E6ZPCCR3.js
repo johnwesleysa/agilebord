@@ -3163,6 +3163,50 @@ function defer(observableFactory) {
 }
 __name(defer, "defer");
 
+// node_modules/rxjs/dist/esm5/internal/observable/forkJoin.js
+function forkJoin() {
+  var args = [];
+  for (var _i = 0; _i < arguments.length; _i++) {
+    args[_i] = arguments[_i];
+  }
+  var resultSelector = popResultSelector(args);
+  var _a7 = argsArgArrayOrObject(args), sources = _a7.args, keys = _a7.keys;
+  var result = new Observable(function(subscriber) {
+    var length = sources.length;
+    if (!length) {
+      subscriber.complete();
+      return;
+    }
+    var values = new Array(length);
+    var remainingCompletions = length;
+    var remainingEmissions = length;
+    var _loop_1 = /* @__PURE__ */ __name(function(sourceIndex2) {
+      var hasValue = false;
+      innerFrom(sources[sourceIndex2]).subscribe(createOperatorSubscriber(subscriber, function(value) {
+        if (!hasValue) {
+          hasValue = true;
+          remainingEmissions--;
+        }
+        values[sourceIndex2] = value;
+      }, function() {
+        return remainingCompletions--;
+      }, void 0, function() {
+        if (!remainingCompletions || !hasValue) {
+          if (!remainingEmissions) {
+            subscriber.next(keys ? createObject(keys, values) : values);
+          }
+          subscriber.complete();
+        }
+      }));
+    }, "_loop_1");
+    for (var sourceIndex = 0; sourceIndex < length; sourceIndex++) {
+      _loop_1(sourceIndex);
+    }
+  });
+  return resultSelector ? result.pipe(mapOneOrManyArgs(resultSelector)) : result;
+}
+__name(forkJoin, "forkJoin");
+
 // node_modules/rxjs/dist/esm5/internal/observable/timer.js
 function timer(dueTime, intervalOrScheduler, scheduler) {
   if (dueTime === void 0) {
@@ -32438,6 +32482,7 @@ export {
   mergeAll,
   concat,
   defer,
+  forkJoin,
   interval,
   merge,
   filter,
@@ -32996,4 +33041,4 @@ export {
    * found in the LICENSE file at https://angular.dev/license
    *)
 */
-//# sourceMappingURL=chunk-NI53IPUC.js.map
+//# sourceMappingURL=chunk-E6ZPCCR3.js.map

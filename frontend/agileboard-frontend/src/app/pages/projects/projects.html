@@ -4,7 +4,7 @@
       <h1>Projetos</h1>
       <p>Gerencie todos os projetos do seu time</p>
     </div>
-    <button class="add-project-btn">
+    <button class="add-project-btn" routerLink="/projects/new">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
       <span>Novo Projeto</span>
     </button>
@@ -22,11 +22,10 @@
   </div>
 
   <div class="projects-grid">
-    <app-project-status-card></app-project-status-card>
-    <app-project-status-card></app-project-status-card>
-    <app-project-status-card></app-project-status-card>
-    <app-project-status-card></app-project-status-card>
-    <app-project-status-card></app-project-status-card>
-    <app-project-status-card></app-project-status-card>
-  </div>
+  @for (project of projects; track project.id) {
+    <app-project-status-card
+      [project]="project">
+    </app-project-status-card>
+  }
+</div>
 </div>

@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Editar Projeto' : 'Criar Novo Projeto' }}</h2>
+  <p>Preencha as informações abaixo.</p>
+
+  <form class="project-form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Título do Projeto</label>
+      <input type="text" id="title" [(ngModel)]="project.title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <textarea id="description" [(ngModel)]="project.description" name="description" rows="4"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" routerLink="projects">Cancelar</button>
+      <button type="submit" class="btn-submit">{{ isEditMode ? 'Salvar Alterações' : 'Criar Projeto' }}</button>
+    </div>
+  </form>
+</div>

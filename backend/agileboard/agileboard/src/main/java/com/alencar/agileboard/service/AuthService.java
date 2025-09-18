@@ -9,7 +9,7 @@ import com.alencar.agileboard.dto.AuthResponseDTO;
 import com.alencar.agileboard.dto.LoginDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
+import org.springframework.dao.DataIntegrityViolationException;
 
 @Service
 public class AuthService {
@@ -32,19 +32,20 @@ public class AuthService {
     }
 
     public void register(RegisterDTO registerDTO) {
-        //Verifica se o username já existe no banco
-        if(userRepository.findByUsername(registerDTO.username()).isPresent()) {
-            throw new IllegalStateException("O nome de usuário já existe");
-        }
-
-        //Cria uma nova entidade de usuário
+        // Cria uma nova entidade de usuário
         User newUser = new User();
         newUser.setUsername(registerDTO.username());
-
-        //Criptografando a senha
+        // Criptografa a senha
         newUser.setPassword(passwordEncoder.encode(registerDTO.password()));
 
-        userRepository.save(newUser);
+        try {
+            // Tenta salvar o novo usuário diretamente
+            userRepository.save(newUser);
+        } catch (DataIntegrityViolationException e) {
+            // Se a exceção for lançada, é porque a constraint 'UNIQUE' do username foi violada.
+            // Isso significa que o usuário já existe.
+            throw new IllegalStateException("O nome de usuário '" + registerDTO.username() + "' já existe.");
+        }
     }
 
     public AuthResponseDTO login(LoginDTO loginDTO) {

@@ -1,7 +1,7 @@
 <div class="auth-father">
   <div class="auth-container">
     <div class="header-section">
-      <img src="assets/logo.svg" alt="AgileBoard Logo" class="logo">
+      <img src="/assets/logo.svg" alt="AgileBoard Logo" class="logo">
       <h2>AgileBoard</h2>
       <p>Crie sua conta e comece a gerenciar seus projetos</p>
     </div>
@@ -10,32 +10,36 @@
       <h3>Criar Conta</h3>
       <p class="subtitle">Preencha os dados abaixo para criar sua conta</p>
 
-      <form action="" class="auth-form">
+      <form class="auth-form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="fullName">Seu Nome Completo</label>
-          <input type="text" id="fullName" placeholder="Seu nome completo">
+          <input type="text" id="fullName" placeholder="Seu nome completo"
+                 [(ngModel)]="formData.fullName" name="fullName">
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" placeholder="seu@email.com">
+          <input type="email" id="email" placeholder="seu@email.com"
+                 [(ngModel)]="formData.username" name="username" required>
         </div>
 
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="text" id="password" placeholder="••••••••••••••">
+          <input type="password" id="password" placeholder="••••••••••••••"
+                 [(ngModel)]="formData.password" name="password" required>
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Senha</label>
-          <input type="text" id="confirmPassword" placeholder="••••••••••••••">
+          <label for="confirmPassword">Confirmar Senha</label>
+          <input type="password" id="confirmPassword" placeholder="••••••••••••••"
+                 [(ngModel)]="formData.confirmPassword" name="confirmPassword">
         </div>
 
           <button class="submit-btn" type="submit">Criar Conta</button>
       </form>
 
       <div class="footer-link">
-        Já tem uma conta? <a href="/login">Fazer Login</a>
+        Já tem uma conta? <a routerLink="login">Fazer Login</a>
       </div>
     </div>
 

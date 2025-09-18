@@ -1,7 +1,7 @@
-<div class="sprint-card-container">
+@if (sprint) {<div class="sprint-card-container">
   <div class="card-header">
     <div class="sprint-title">
-      <h4>Sprint 12 - Authentication Flow</h4>
+      <h4>{{ sprint.title }}</h4>
       <span class="status-badge active">Ativo</span>
     </div>
     <span class="sprint-project">E-commerce Platform</span>
@@ -9,7 +9,7 @@
 
   <div class="sprint-goal">
     <p class="goal-title">Meta da Sprint</p>
-    <p class="goal-description">Implementar sistema completo de autenticação</p>
+    <p class="goal-description">{{ sprint.description }}</p>
   </div>
 
   <div class="sprint-progress">
@@ -30,3 +30,4 @@
     <button class="details-btn">Ver Detalhes</button>
   </div>
 </div>
+}

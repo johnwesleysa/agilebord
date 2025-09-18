@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Sprint } from '../../models/sprint.model';
 
 @Component({
   selector: 'app-sprint-card',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './sprint-card.scss'
 })
 export class SprintCard {
-
+  @Input() sprint: Sprint | null = null;
 }
