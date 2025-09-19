@@ -1,0 +1,46 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  h3 { margin: 0; font-size: 1.25rem; }
+  .close-btn { background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+// TODO: Adicionar estilos para form-group, input, textarea, btn-cancel, btn-submit
+// (Você pode copiar e colar dos outros arquivos de formulário que já estilizamos)

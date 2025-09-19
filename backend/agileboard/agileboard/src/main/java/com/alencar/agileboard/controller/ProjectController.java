@@ -50,6 +50,13 @@ public class ProjectController {
         return ResponseEntity.created(location).body(createdSprint);
     }
 
+    //Lista por projeto
+    @GetMapping("/{projectId}/sprints")
+    public ResponseEntity<List<SprintResponseDTO>> getSprintsForProject(@PathVariable Long projectId) {
+        List<SprintResponseDTO> sprints = sprintService.getSprintsByProjectId(projectId);
+        return ResponseEntity.ok(sprints);
+    }
+
     // ATUALIZA um projeto existente (CÓDIGO SIMPLIFICADO)
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id, @Valid @RequestBody ProjectCreateDTO projectDetails) {

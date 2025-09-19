@@ -28,4 +28,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "sprint_id", nullable = false)
     private Sprint sprint;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface SprintRepository extends JpaRepository<Sprint, Long> {
     List<Sprint> findByTitleContainingIgnoreCase(String title);
+    List<Sprint> findByProjectId(Long projectId);
 }

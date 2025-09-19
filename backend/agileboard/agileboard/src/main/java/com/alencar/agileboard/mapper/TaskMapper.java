@@ -22,6 +22,7 @@ public class TaskMapper {
                 task.getTitle(),
                 task.getDescription(),
                 task.getPriorityLevel(),
+                task.getStatus(),
                 task.getSprint().getId());
     }
 }

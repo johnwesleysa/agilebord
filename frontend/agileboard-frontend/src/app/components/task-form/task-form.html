@@ -1,0 +1,35 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Criar Nova Tarefa</h3>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <form class="task-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Título da Tarefa</label>
+        <input type="text" id="title" name="title" [(ngModel)]="taskData.title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea id="description" name="description" [(ngModel)]="taskData.description" rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="priorityLevel">Prioridade</label>
+        <select id="priorityLevel" name="priorityLevel" [(ngModel)]="taskData.priorityLevel">
+          <option value="LOW">Baixa</option>
+          <option value="MEDIUM">Média</option>
+          <option value="HIGH">Alta</option>
+          <option value="CRITICAL">Crítica</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="close()">Cancelar</button>
+        <button type="submit" class="btn-submit">Criar Tarefa</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import com.alencar.agileboard.service.TaskService.TaskUpdateDTO;
 import java.net.URI;
 import java.util.List;
 
@@ -26,10 +26,9 @@ public class TaskController {
 
     // Edita um sprint pelo id
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id,@Valid @RequestBody TaskCreateDTO taskDetails) {
-        return taskService.updateTask(id, taskDetails)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO taskDetails) {
+        TaskResponseDTO updatedTask = taskService.updateTask(id, taskDetails);
+        return ResponseEntity.ok(updatedTask);
     }
 
     // LISTA todos as tasks ou busca pelo title

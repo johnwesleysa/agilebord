@@ -1,4 +1,3 @@
-// Em src/app/models/sprint.model.ts
 export interface Sprint {
   id: number;
   title: string;

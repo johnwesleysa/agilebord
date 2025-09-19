@@ -83,6 +83,17 @@ public class SprintService {
                 });
     }
 
+    @Transactional(readOnly = true)
+    public List<SprintResponseDTO> getSprintsByProjectId(Long projectId) {
+        // Pede ao repositório para encontrar todas as sprints de um projeto
+        List<Sprint> sprints = sprintRepository.findByProjectId(projectId);
+
+        // Mapeia a lista de entidades para uma lista de DTOs e retorna
+        return sprints.stream()
+                .map(sprintMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     // Deleta uma sprint
     public boolean deleteSprint(Long id) {
         if(sprintRepository.existsById(id)) {

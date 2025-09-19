@@ -6,8 +6,8 @@ import { Dashboard } from './pages/dashboard/dashboard'
 import { Projects } from './pages/projects/projects';
 import { Sprints } from './pages/sprints/sprints';
 import { Tasks } from './pages/tasks/tasks';
-import { ProjectForm } from './pages/project-form/project-form';
-import { SprintForm } from './pages/sprint-form/sprint-form';
+import { ProjectForm } from './components/project-form/project-form';
+import { SprintForm } from './components/sprint-form/sprint-form';
 
 
 export const routes: Routes = [
@@ -22,10 +22,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: Dashboard },
       { path: 'projects', component: Projects},
-      { path: 'projects/new', component: ProjectForm },
-      { path: 'projects/edit/:id', component: ProjectForm },
       { path: 'sprints', component: Sprints},
-      { path: 'sprints/new', component: SprintForm},
       { path: 'tasks', component: Tasks}
 
 

@@ -66,6 +66,13 @@ public class SprintController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+
+    @GetMapping("/{sprintId}/tasks")
+    public ResponseEntity<List<TaskResponseDTO>> getTasksForSprint(@PathVariable Long sprintId) {
+        List<TaskResponseDTO> tasks = taskService.getTasksBySprintId(sprintId);
+        return ResponseEntity.ok(tasks);
+    }
+
     // DELETA uma sprint do banco
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSprintById(@PathVariable Long id) {

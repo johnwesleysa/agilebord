@@ -1,13 +1,13 @@
-<div class="task-card-container">
+@if (task) {<div class="task-card-container">
   <div class="card-header">
-    <h5 class="task-title">Implementar autenticação JWT</h5>
+    <h5 class="task-title">{{ task.title }}</h5>
     <button class="options-btn">...</button>
   </div>
 
-  <p class="task-description">Criar sistema de autenticação usando JWT tokens</p>
+  <p class="task-description">{{ task.description }}</p>
 
   <div class="tags">
-    <span class="tag high-priority">Alta</span>
+    <span class="tag high-priority">{{ task.priorityLevel }}</span>
   </div>
 
   <div class="card-footer">
@@ -21,3 +21,4 @@
     </div>
   </div>
 </div>
+}

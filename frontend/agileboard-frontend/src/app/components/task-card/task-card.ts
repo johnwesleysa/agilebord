@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-card',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './task-card.scss'
 })
 export class TaskCard {
-
+  @Input() task: Task | null = null;
 }

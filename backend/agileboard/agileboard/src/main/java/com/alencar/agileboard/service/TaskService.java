@@ -4,12 +4,15 @@ import com.alencar.agileboard.domain.Sprint;
 import com.alencar.agileboard.domain.Task;
 import com.alencar.agileboard.dto.TaskCreateDTO;
 import com.alencar.agileboard.dto.TaskResponseDTO;
+import com.alencar.agileboard.exception.ResourceNotFoundException;
 import com.alencar.agileboard.mapper.TaskMapper;
 import com.alencar.agileboard.repository.SprintRepository;
 import com.alencar.agileboard.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.alencar.agileboard.domain.PriorityLevel;
+import com.alencar.agileboard.domain.TaskStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,19 +33,26 @@ public class TaskService {
 
     // Cria uma task
     @Transactional
-    public TaskResponseDTO createTaskForSprint(Long sprintId, TaskCreateDTO dto){
-        //Bucando a entidade pai (sprint)
+    public TaskResponseDTO createTaskForSprint(Long sprintId, TaskCreateDTO dto) {
+        // 1. Find the parent Sprint
         Sprint sprint = sprintRepository.findById(sprintId)
-                .orElseThrow(() -> new RuntimeException("Sprint com ID" + sprintId + " não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Sprint with ID " + sprintId + " not found."));
 
+        // 2. Convert the DTO to the Task entity
         Task taskEntity = taskMapper.toEntity(dto);
 
-        //Associação da task criada com a sprint
+        // 3. Associate the task with its Sprint
         taskEntity.setSprint(sprint);
 
-        Task savedTask = taskRepository.save(taskEntity);
-        return taskMapper.toResponseDTO(savedTask);
+        // 4. --- THIS IS THE FIX ---
+        //    Set the default status for any new task
+        taskEntity.setStatus(TaskStatus.A_FAZER);
 
+        // 5. Save the new task
+        Task savedTask = taskRepository.save(taskEntity);
+
+        // 6. Return the response DTO
+        return taskMapper.toResponseDTO(savedTask);
     }
 
     // Busca uma task por title ou lista todas
@@ -69,19 +79,33 @@ public class TaskService {
 
     // Atualiza uma task pelo id
     @Transactional
-    public Optional<TaskResponseDTO> updateTask(Long id, TaskCreateDTO dto){
-        return taskRepository.findById(id)
-                .map(existingTask -> {
-                    existingTask.setTitle(dto.title());
-                    existingTask.setDescription(dto.description());
-                    existingTask.setPriorityLevel(dto.priorityLevel());
+    public TaskResponseDTO updateTask(Long id, TaskUpdateDTO dto){
+        Task existingTask = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarefa com ID " + id + " não encontrada."));
 
-                    Task updatedTask = taskRepository.save(existingTask);
+        // Atualiza todos os campos a partir do DTO
+        existingTask.setTitle(dto.title());
+        existingTask.setDescription(dto.description());
+        existingTask.setPriorityLevel(dto.priorityLevel());
+        existingTask.setStatus(dto.status()); // <-- Lógica de atualização do status
 
-                    return taskMapper.toResponseDTO(updatedTask);
-
-                });
+        Task updatedTask = taskRepository.save(existingTask);
+        return taskMapper.toResponseDTO(updatedTask);
     }
+
+    @Transactional(readOnly = true)
+    public List<TaskResponseDTO> getTasksBySprintId(Long sprintId) {
+        return taskRepository.findBySprintId(sprintId).stream()
+                .map(taskMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public record TaskUpdateDTO(
+            String title,
+            String description,
+            PriorityLevel priorityLevel,
+            TaskStatus status // O novo campo para o status do Kanban
+    ) {}
 
     // Deleta uma task
     public boolean deleteTask(Long id) {
