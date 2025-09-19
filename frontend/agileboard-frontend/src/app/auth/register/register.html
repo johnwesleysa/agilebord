@@ -10,6 +10,14 @@
       <h3>Criar Conta</h3>
       <p class="subtitle">Preencha os dados abaixo para criar sua conta</p>
 
+      @if (errorMessage) {
+        <div class="alert error">{{ errorMessage }}</div>
+      }
+
+      @if (successMessage) {
+        <div class="alert success">{{ successMessage }}</div>
+      }
+
       <form class="auth-form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="fullName">Seu Nome Completo</label>

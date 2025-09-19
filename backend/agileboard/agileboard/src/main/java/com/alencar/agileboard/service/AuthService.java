@@ -35,6 +35,7 @@ public class AuthService {
         // Cria uma nova entidade de usuário
         User newUser = new User();
         newUser.setUsername(registerDTO.username());
+        newUser.setFullName(registerDTO.fullName());
         // Criptografa a senha
         newUser.setPassword(passwordEncoder.encode(registerDTO.password()));
 

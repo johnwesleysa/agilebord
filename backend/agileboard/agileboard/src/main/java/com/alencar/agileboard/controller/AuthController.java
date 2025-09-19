@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,9 +24,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterDTO registerDTO) {
         authService.register(registerDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado com sucesso!");
+
+        Map<String, String> response = Map.of("message", "Usuário registrado com sucesso!");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")

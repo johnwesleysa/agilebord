@@ -21,6 +21,9 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(name = "full_name")
+    private String fullName;
+
     //OBS A senha será armezada com um BCrypt
     @Column(nullable = false)
     private String password;
